@@ -1,6 +1,5 @@
 body {
-  padding: 6rem 0 0 0;
-  font-size: 18px;
+  padding-top: 6rem;
 }
 
 td {
@@ -8,5 +7,9 @@ td {
 }
 
 .row {
-  margin: 3% 0 3% 0;
+  margin: 2rem 0 2rem 0;
+}
+
+canvas.chart {
+  margin-top: 3rem;
 }

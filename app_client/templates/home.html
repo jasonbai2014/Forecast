@@ -33,3 +33,13 @@
         </div>
     </div>
 </div>
+
+<div class="row">
+    <button class="btn btn-default col-xs-12 col-sm-4 col-sm-push-4 chart" ng-click="homeCtrl.showHistoricalData()">
+        Show data for the last 2 weeks
+    </button>
+    <canvas id="line" class="chart chart-line" chart-data="data"
+            chart-labels="labels" chart-series="series" chart-options="options"
+            chart-dataset-override="datasetOverride" chart-click="onClick">
+    </canvas>
+</div>
