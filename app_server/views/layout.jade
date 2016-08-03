@@ -1,0 +1,39 @@
+doctype html
+html
+  head
+    title= title
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    script(type='text/javascript', src='/angular/angular.min.js')
+      script(type='text/javascript', src='/angular/angular.min.js.map')
+    script(type='text/javascript', src='https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.js')
+    script(type='text/javascript', src='/skyCastApp.js')
+    script(type='text/javascript', src='/controllers/homeController.js')
+    link(rel='stylesheet', href='/bootstrap/css/bootstrap.min.css')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body(ng-app='skyCastApp')
+    nav.navbar.navbar-default.navbar-fixed-top
+      .container
+        .navbar-header
+          a.navbar-brand(href='/') SkyCast
+          button.navbar-toggle(data-toggle='collapse', data-target='#navbar-main')
+            span.icon-bar
+            span.icon-bar
+            span.icon-bar
+        #navbar-main.collapse.navbar-collapse.navbar-right
+          ul.nav.navbar-nav
+            li
+              a(href='/') Home
+            li
+              a(href='#') Sign in
+
+    .container
+      div(ng-view)
+
+      footer
+        .row
+          .col-xs-12
+            small &copy; Qing Bai 2016
+
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js')
+    script(src='/bootstrap/js/bootstrap.min.js')
