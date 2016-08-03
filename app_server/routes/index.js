@@ -3,10 +3,10 @@ var locationCtrl = require('../controllers/locationController');
 var weatherCtrl = require('../controllers/weatherController');
 var router = express.Router();
 
-/* Get home page. */
-router.get('/', function(req, res) {
-  res.render('layout', { title: 'SkyCast' });
-});
+///* Get home page. */
+//router.get('/', function(req, res) {
+//  res.render('layout', { title: 'SkyCast' });
+//});
 
 /* Get lat and lng from an address */
 router.get('/location', locationCtrl.searchLocation);

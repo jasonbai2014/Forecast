@@ -10,3 +10,26 @@
         </div>
     </div>
 </div>
+
+<div class="row">
+    <div class="col-xs-12 alert alert-warning" ng-show="homeCtrl.errorOccurred">
+        <strong>Warning! </strong>Please enter a valid address.
+    </div>
+    <div class="col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">Weather Forecast</div>
+            <table class="table">
+                <tr>
+                    <td>Today</td>
+                    <td>{{homeCtrl.reports.current.summary}}</td>
+                    <td>{{homeCtrl.reports.current.temp}} &deg;F</td>
+                </tr>
+                <tr ng-repeat="report in homeCtrl.reports.future">
+                    <td>{{report.weekday}}</td>
+                    <td>{{report.summary}}</td>
+                    <td>{{report.minTemp}} &deg;F to {{report.maxTemp}} &deg;F </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

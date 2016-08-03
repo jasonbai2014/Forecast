@@ -1,9 +1,9 @@
 
 
-angular.module('skyCastApp', ['ngRoute']);
-angular.module('skyCastApp').config(['$routeProvider', routeConfig]);
+angular.module('skyCastApp', ['ngRoute', 'ui.bootstrap']);
+angular.module('skyCastApp').config(['$routeProvider', '$locationProvider', routeConfig]);
 
-function routeConfig ($routeProvider) {
+function routeConfig ($routeProvider, $locationProvider) {
     $routeProvider.when('/', {
         templateUrl: 'templates/home.html',
         controller: 'homeController',
@@ -12,6 +12,12 @@ function routeConfig ($routeProvider) {
 
     $routeProvider.otherwise({
         redirectTo: '/'
+    });
+
+
+    $locationProvider.html5Mode({
+        enabled: true,
+        requireBase: false
     });
 };
 

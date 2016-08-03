@@ -1,7 +1,7 @@
 
 var request = require('request');
-const FORECAST_API_KEY = process.env.FORECAST_API_KEY;
-//const FORECAST_API_KEY = '9eab6c0fc4aa790c16ff8444601cfd26';
+//const FORECAST_API_KEY = process.env.FORECAST_API_KEY;
+const FORECAST_API_KEY = '9eab6c0fc4aa790c16ff8444601cfd26';
 
 module.exports.searchWeather = function(req, res) {
     var lat = req.query.lat;
