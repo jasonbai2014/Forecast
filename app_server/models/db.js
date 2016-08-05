@@ -1,6 +1,8 @@
 
 var mongoose = require('mongoose');
-const dbURI = process.env.MONGODB_URI;
+//const dbURI = process.env.MONGODB_URI;
+const dbURI = 'mongodb://heroku_rxvmxsrx:96nbdsfo5494hi4s1mcpt9qkfq@ds023054.mlab.com:23054/heroku_rxvmxsrx';
+mongoose.Promise = global.Promise; // Use native promises for mongoose
 mongoose.connect(dbURI);
 require('./users');
 
