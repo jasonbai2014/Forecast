@@ -15,7 +15,7 @@ module.exports.signin = function(req, res) {
         }
 
         if (user) {
-            var jtw = user.generateJwt();
+            var jwt = user.generateJwt();
             sendJsonResponse(res, 200, {jwt:jwt});
         } else {
             sendJsonResponse(res, 401, info);
@@ -34,7 +34,6 @@ module.exports.signup = function(req, res) {
     user.queries = [];
 
     user.setPassword(req.body.password);
-
     user.save(function(err) {
         if (err) {
             sendJsonResponse(res, 404, err);

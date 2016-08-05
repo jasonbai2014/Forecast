@@ -9,14 +9,30 @@ angular.module('skyCastApp').service('accountService', ['$window', '$http', func
     };
 
     var signup = function(user) {
-        $http.post('/signup', user).then(function(data) {
+        return $http.post('/signup', user).then(function(data) {
+            // success callback
             saveJwt(data.jwt);
+            return null
+        }, function() {
+            // error callback
+            return {
+                message: "Can't sign up, Please try again"
+            }
         });
     };
 
     var signin = function(user) {
-        http.post('/signin', user).then(function(data) {
+        return $http.post('/signin', user).then(function(data) {
+            // success callback
             saveJwt(data.jwt);
+            return null;
+        }, function(data) {
+            // error callback
+            if (data.data) {
+                return data.data;
+            } else {
+                return data;
+            }
         });
     };
 

@@ -1,0 +1,17 @@
+
+<div class="row">
+    <form class="col-xs-12 col-sm-4 col-sm-push-4" ng-submit="signupCtrl.submit()">
+        <div class="alert alert-danger" ng-show="signupCtrl.errMessage">{{signupCtrl.errMessage}}</div>
+        <div class="form-group">
+            <label for="usernameInput">Username</label>
+            <input type="text" class="form-control" id="usernameInput" placeholder="Enter your username"
+                   ng-model="signupCtrl.credentials.username">
+        </div>
+        <div class="form-group">
+            <label for="passwordInput">Password</label>
+            <input type="password" class="form-control" id="passwordInput" placeholder="Enter your password"
+                   ng-model="signupCtrl.credentials.password">
+        </div>
+        <button type="submit" class="btn btn-default">Sign Up</button>
+    </form>
+</div>
