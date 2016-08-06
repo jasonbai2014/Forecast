@@ -3,6 +3,7 @@ angular.module('skyCastApp').factory('reportService', ['$http', '$q', reportServ
 
 function reportService($http, $q) {
     var weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const secInOneDay = 86400; // number of seconds in one day
 
     var reports = {
         current: {},
@@ -60,6 +61,32 @@ function reportService($http, $q) {
         }
     };
 
+    function searchHistoricalData(coords, searchRange) {
+        var promises = null;
+
+        if (coords) {
+            var curDayInSec = Math.round(Date.now() / 1000);
+            var i, minTemp, maxTemp;
+            promises = [];
+
+            for (i = 1; i <= searchRange; i++) {
+                promises.push($http.get('/weather?lat=' + coords.lat + '&lng=' + coords.lng + '&time=' +
+                    (curDayInSec - i * secInOneDay)).then(function (response) {
+                    // this is success callback
+                    var data = {};
+                    data.time = response.data.daily.data[0].time;
+                    minTemp = parseInt(response.data.daily.data[0].temperatureMin);
+                    maxTemp = parseInt(response.data.daily.data[0].temperatureMax);
+                    data.temp = Math.round((minTemp + maxTemp) / 2);
+
+                    return data;
+                }));
+            }
+        }
+
+        return promises;
+    };
+
     function containsData() {
         return reports.coords !== null;
     }
@@ -72,6 +99,7 @@ function reportService($http, $q) {
         searchLoc: searchLoc,
         searchWeather: searchWeather,
         containsData: containsData,
-        getReports: getReports
+        getReports: getReports,
+        searchHistoricalData: searchHistoricalData
     };
 }

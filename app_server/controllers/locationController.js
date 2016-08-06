@@ -1,8 +1,10 @@
 
 var request = require('request');
 
-//const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
-const GOOGLE_API_KEY = 'AIzaSyC_RFPQsHTtn4TShF-ozdw3A_bSabQAZHM';
+var GOOGLE_API_KEY = 'AIzaSyC_RFPQsHTtn4TShF-ozdw3A_bSabQAZHM';
+if (process.env.NODE_ENV === 'production') {
+    GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
+}
 
 module.exports.searchLocation = function(req, res) {
     var location = req.query.location;

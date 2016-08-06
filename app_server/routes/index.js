@@ -5,9 +5,14 @@ var authenticationCtrl = require('../controllers/authenticationController');
 var histCtrl = require('../controllers/historyController');
 var router = express.Router();
 
+var SECRET = 'wruf9832y9fhwguf';
+if (process.env.NODE_ENV === 'production') {
+    SECRET = process.env.SECRET;
+}
+
 var jwt = require('express-jwt');
 var auth = jwt({
-    secret: 'thisIsSecret'
+    secret: SECRET
 });
 
 /* Get lat and lng from an address */
