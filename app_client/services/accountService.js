@@ -1,5 +1,8 @@
 
-angular.module('skyCastApp').service('accountService', ['$window', '$http', function($window, $http) {
+angular.module('skyCastApp').factory('accountService', ['$window', '$http', accountService]);
+
+
+function accountService($window, $http) {
     var saveJwt = function(token) {
         $window.localStorage['jwt-token'] = token;
     };
@@ -65,4 +68,4 @@ angular.module('skyCastApp').service('accountService', ['$window', '$http', func
         getCurUsername: getCurUsername,
         isLoggedIn: isLoggedIn
     };
-}]);
+}

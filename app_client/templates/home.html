@@ -13,8 +13,8 @@
 </div>
 
 <div class="row">
-    <div class="col-xs-12 alert alert-warning" ng-show="homeCtrl.errorOccurred">
-        <strong>Warning! </strong>Please enter a valid address.
+    <div class="col-xs-12 alert alert-warning" ng-show="homeCtrl.errMessage">
+        <strong>Warning! </strong>{{homeCtrl.errMessage}}.
     </div>
     <div class="col-xs-12">
         <div class="panel panel-default">

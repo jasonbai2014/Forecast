@@ -1,11 +1,10 @@
 
-angular.module('skyCastApp').controller('homeController', ['$http', '$q', '$scope', 'accountService', homeController]);
+angular.module('skyCastApp').controller('homeController', ['$http', '$q', '$scope', 'accountService', 'reportService', homeController]);
 
-function homeController($http, $q, $scope, accountService) {
+function homeController($http, $q, $scope, accountService, reportService) {
     var homeCtrl = this;
-    var weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     const secInOneDay = 86400; // number of seconds in one day
-    const searchRange = 14 // number of days for historical data search
+    const searchRange = 14; // number of days for historical data search
     var coords = null;
 
     homeCtrl.targetLoc = 'Seattle'; // this is a default location
@@ -16,64 +15,45 @@ function homeController($http, $q, $scope, accountService) {
     };
 
     homeCtrl.search = function() {
-        var loc = homeCtrl.targetLoc;
+        reportService.searchLoc(homeCtrl.targetLoc).then(function(response) {
+            return reportService.searchWeather(response.coords);
+        }, function(err) {
+            return $q.reject(err)
+        }).then(function(response) {
+            cloneReports(response);
+            homeCtrl.targetLoc = response.formattedAddress;
+            homeCtrl.errMessage = '';
+        }, function(err) {
+            homeCtrl.errMessage = err.error;
+        });
+    }
 
-        if (loc) {
-            $http.get('/location?location=' + loc).then(function (response) {
-                // This is success callback
-                if (response.data.results.length > 0) {
-                    coords = response.data.results[0].geometry.location;
-                    homeCtrl.targetLoc = response.data.results[0].formatted_address;
-                    searchWeather();
-                    homeCtrl.errorOccurred = false;
+    function cloneReports(reports) {
+        homeCtrl.reports.current.summary = reports.current.summary;
+        homeCtrl.reports.current.temp = reports.current.temp;
+        var i, report, reportCopy;
 
-                    // a user can save any query into the database
-                    var config = {headers: {
-                        Authorization: 'Bearer '+ accountService.getJwt()
-                    }};
-
-                    if (accountService.isLoggedIn()) {
-                        $http.put('/history/' + homeCtrl.targetLoc, null, config);
-                    }
-                } else {
-                    // when no location matches, the array size is 0
-                    homeCtrl.errorOccurred = true;
-                }
-            });
+        for (i = 0; i < homeCtrl.reports.future.length; i++) {
+            report = reports.future[i];
+            reportCopy = homeCtrl.reports.future[i];
+            reportCopy.weekday = report.weekday;
+            reportCopy.summary = report.summary;
+            reportCopy.minTemp = report.minTemp;
+            reportCopy.maxTemp = report.maxTemp;
         }
-    };
+    }
 
-    homeCtrl.search(); // initialize the forecast table with weather of the default location
-
-    function searchWeather() {
-        if (coords) {
-            $http.get('/weather?lat=' + coords.lat + '&lng=' + coords.lng).then(function (response) {
-                // This is success callback
-                processCurReport(response.data.currently);
-                processFutureReports(response.data.daily.data);
-            });
+    (function initialize() {
+        if (reportService.containsData()) {
+            var data = reportService.getReports();
+            cloneReports(data);
+            homeCtrl.targetLoc = data.formattedAddress;
+        } else {
+            homeCtrl.search();
         }
-    };
+    })();
 
-    function processCurReport(curReport) {
-        homeCtrl.reports.current.summary = curReport.summary;
-        homeCtrl.reports.current.temp = Math.round(curReport.temperature);
-    };
-
-    function processFutureReports(furReports) {
-        var i, date, correctedIdx;
-        // the data at index 0 is for current day, don't need to have it in the future reports
-        for (i = 1; i < furReports.length; i++) {
-            date = new Date(furReports[i].time * 1000);
-            correctedIdx = i - 1;
-            homeCtrl.reports.future[correctedIdx].weekday = weekdays[date.getDay()];
-            homeCtrl.reports.future[correctedIdx].summary = furReports[i].summary;
-            homeCtrl.reports.future[correctedIdx].minTemp = Math.max(furReports[i].temperatureMin);
-            homeCtrl.reports.future[correctedIdx].maxTemp = Math.max(furReports[i].temperatureMax);
-        }
-    };
-
-
+    // the following functions are for the historical data chart
     homeCtrl.showHistoricalData = function() {
         var promises = searchHistoricalData();
 
