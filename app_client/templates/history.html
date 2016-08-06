@@ -1,0 +1,15 @@
+<nav-directive></nav-directive>
+<div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-push-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">Search History</div>
+            <table class="table table-striped">
+                <tbody>
+                <tr ng-repeat="query in histCtrl.searchHistory track by $index">
+                    <td>{{query}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -17,13 +17,12 @@ function signupController (accountService, $location) {
         } else {
             accountService.signup(self.credentials).then(function(response) {
                 if (!response) {
-                    // sign up successfully
                     $location.path('/');
                 } else {
                     self.errMessage = response.message;
                 }
             });
         }
-    }
+    };
 };
 

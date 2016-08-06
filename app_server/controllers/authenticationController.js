@@ -39,7 +39,7 @@ module.exports.signup = function(req, res) {
             sendJsonResponse(res, 404, err);
         } else {
             var jwt = user.generateJwt();
-            sendJsonResponse(res, 200, {jtw: jwt});
+            sendJsonResponse(res, 200, {jwt: jwt});
         }
     });
 };

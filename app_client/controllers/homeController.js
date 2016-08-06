@@ -1,7 +1,7 @@
 
-angular.module('skyCastApp').controller('homeController', ['$http', '$q', '$scope', homeController]);
+angular.module('skyCastApp').controller('homeController', ['$http', '$q', '$scope', 'accountService', homeController]);
 
-function homeController($http, $q, $scope) {
+function homeController($http, $q, $scope, accountService) {
     var homeCtrl = this;
     var weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     const secInOneDay = 86400; // number of seconds in one day
@@ -26,6 +26,15 @@ function homeController($http, $q, $scope) {
                     homeCtrl.targetLoc = response.data.results[0].formatted_address;
                     searchWeather();
                     homeCtrl.errorOccurred = false;
+
+                    // a user can save any query into the database
+                    var config = {headers: {
+                        Authorization: 'Bearer '+ accountService.getJwt()
+                    }};
+
+                    if (accountService.isLoggedIn()) {
+                        $http.put('/history/' + homeCtrl.targetLoc, null, config);
+                    }
                 } else {
                     // when no location matches, the array size is 0
                     homeCtrl.errorOccurred = true;

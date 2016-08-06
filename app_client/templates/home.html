@@ -1,3 +1,4 @@
+<nav-directive></nav-directive>
 <div class="row">
     <div class="col-xs-12 col-sm-6 col-sm-push-3">
         <div class="input-group">
@@ -19,16 +20,18 @@
         <div class="panel panel-default">
             <div class="panel-heading">Weather Forecast</div>
             <table class="table table-striped">
-                <tr>
-                    <td>Today</td>
-                    <td>{{homeCtrl.reports.current.summary}}</td>
-                    <td>{{homeCtrl.reports.current.temp}} &deg;F</td>
-                </tr>
-                <tr ng-repeat="report in homeCtrl.reports.future">
-                    <td>{{report.weekday}}</td>
-                    <td>{{report.summary}}</td>
-                    <td>{{report.minTemp}} &deg;F to {{report.maxTemp}} &deg;F </td>
-                </tr>
+                <tbody>
+                    <tr>
+                        <td>Today</td>
+                        <td>{{homeCtrl.reports.current.summary}}</td>
+                        <td>{{homeCtrl.reports.current.temp}} &deg;F</td>
+                    </tr>
+                    <tr ng-repeat="report in homeCtrl.reports.future">
+                        <td>{{report.weekday}}</td>
+                        <td>{{report.summary}}</td>
+                        <td>{{report.minTemp}} &deg;F to {{report.maxTemp}} &deg;F </td>
+                    </tr>
+                </tbody>
             </table>
         </div>
     </div>

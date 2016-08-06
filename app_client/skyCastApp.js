@@ -1,9 +1,15 @@
 
 
-angular.module('skyCastApp', ['ngRoute', 'ui.bootstrap', 'chart.js']);
+angular.module('skyCastApp', ['ngRoute', 'chart.js']);
 angular.module('skyCastApp').config(['$routeProvider', '$locationProvider', routeConfig]);
 
 function routeConfig ($routeProvider, $locationProvider) {
+    $routeProvider.when('/history', {
+        templateUrl: 'templates/history.html',
+        controller: 'historyController',
+        controllerAs: 'histCtrl'
+    });
+
     $routeProvider.when('/signin', {
         templateUrl: 'templates/signin.html',
         controller: 'signinController',

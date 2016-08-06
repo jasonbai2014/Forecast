@@ -11,7 +11,7 @@ mongoose.connection.on('connected', function() {
 });
 
 mongoose.connection.on('disconnected', function() {
-   console.log('Mongoose disconnected from ' + dbURI)
+   console.log('Mongoose disconnected from ' + dbURI);
 });
 
 mongoose.connection.on('error', function(err) {
