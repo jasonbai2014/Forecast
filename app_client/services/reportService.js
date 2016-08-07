@@ -45,6 +45,7 @@ function reportService($http, $q) {
 
     function processCurReport(curReport) {
         reports.current.summary = curReport.summary;
+        reports.current.icon = curReport.icon;
         reports.current.temp = Math.round(curReport.temperature);
     };
 
@@ -56,6 +57,7 @@ function reportService($http, $q) {
             correctedIdx = i - 1;
             reports.future[correctedIdx].weekday = weekdays[date.getDay()];
             reports.future[correctedIdx].summary = furReports[i].summary;
+            reports.future[correctedIdx].icon = furReports[i].icon;
             reports.future[correctedIdx].minTemp = Math.max(furReports[i].temperatureMin);
             reports.future[correctedIdx].maxTemp = Math.max(furReports[i].temperatureMax);
         }

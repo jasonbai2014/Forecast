@@ -13,21 +13,23 @@
 </div>
 
 <div class="row">
-    <div class="col-xs-12 alert alert-warning" ng-show="homeCtrl.errMessage">
+    <div class="alert alert-warning" ng-show="homeCtrl.errMessage">
         <strong>Warning! </strong>{{homeCtrl.errMessage}}.
     </div>
-    <div class="col-xs-12">
+    <div>
         <div class="panel panel-default">
             <div class="panel-heading">Weather Forecast</div>
             <table class="table table-striped">
                 <tbody>
                     <tr>
-                        <td>Today</td>
+                        <td><skycon icon="homeCtrl.reports.current.icon"></skycon></td>
+                        <td class="title">Today</td>
                         <td>{{homeCtrl.reports.current.summary}}</td>
                         <td>{{homeCtrl.reports.current.temp}} &deg;F</td>
                     </tr>
-                    <tr ng-repeat="report in homeCtrl.reports.future">
-                        <td>{{report.weekday}}</td>
+                    <tr ng-repeat="report in homeCtrl.reports.future" >
+                        <td><skycon icon="report.icon"></skycon></td>
+                        <td class="title">{{report.weekday}}</td>
                         <td>{{report.summary}}</td>
                         <td>{{report.minTemp}} &deg;F to {{report.maxTemp}} &deg;F </td>
                     </tr>

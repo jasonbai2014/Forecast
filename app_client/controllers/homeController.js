@@ -1,7 +1,7 @@
 
-angular.module('skyCastApp').controller('homeController', ['$http', '$q', 'reportService', 'accountService', homeController]);
+angular.module('skyCastApp').controller('homeController', ['$http', '$q', 'reportService', 'accountService', '$window', homeController]);
 
-function homeController($http, $q, reportService, accountService) {
+function homeController($http, $q, reportService, accountService, $window) {
     var self = this;
     self.targetLoc = 'Seattle'; // this is a default location
     self.reports = {
@@ -38,6 +38,7 @@ function homeController($http, $q, reportService, accountService) {
 
     function cloneReports(reports) {
         self.reports.current.summary = reports.current.summary;
+        self.reports.current.icon = reports.current.icon;
         self.reports.current.temp = reports.current.temp;
         var i, report, reportCopy;
 
@@ -46,6 +47,7 @@ function homeController($http, $q, reportService, accountService) {
             reportCopy = self.reports.future[i];
             reportCopy.weekday = report.weekday;
             reportCopy.summary = report.summary;
+            reportCopy.icon = report.icon;
             reportCopy.minTemp = report.minTemp;
             reportCopy.maxTemp = report.maxTemp;
         }

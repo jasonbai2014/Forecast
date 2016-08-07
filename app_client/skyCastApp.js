@@ -1,6 +1,6 @@
 
 
-angular.module('skyCastApp', ['ngRoute', 'chart.js']);
+angular.module('skyCastApp', ['ngRoute', 'chart.js', 'angular-skycons']);
 angular.module('skyCastApp').config(['$routeProvider', '$locationProvider', routeConfig]);
 
 function routeConfig ($routeProvider, $locationProvider) {
