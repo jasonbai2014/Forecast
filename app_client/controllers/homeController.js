@@ -1,7 +1,8 @@
 
-angular.module('skyCastApp').controller('homeController', ['$http', '$q', 'reportService', 'accountService', '$window', homeController]);
+angular.module('skyCastApp').controller('homeController', ['$rootScope', '$http', '$q', 'reportService',
+    'accountService', homeController]);
 
-function homeController($http, $q, reportService, accountService, $window) {
+function homeController($rootScope, $http, $q, reportService, accountService) {
     var self = this;
     self.targetLoc = 'Seattle'; // this is a default location
     self.reports = {
@@ -10,29 +11,34 @@ function homeController($http, $q, reportService, accountService, $window) {
     };
 
     self.search = function() {
-        getReports();
+        getReports().then(function() {
+            // this save a user's valid query into the database
+            var config = {headers: {
+                Authorization: 'Bearer '+ accountService.getJwt()
+            }};
 
-        // a user can save any query into the database, this includes both valid and invalid queries
-        var config = {headers: {
-            Authorization: 'Bearer '+ accountService.getJwt()
-        }};
+            if (accountService.isLoggedIn()) {
+                $http.put('/history/' + self.targetLoc, null, config);
+            }
 
-        if (accountService.isLoggedIn()) {
-            $http.put('/history/' + self.targetLoc, null, config);
-        }
+            $rootScope.$broadcast('newSearchEvent');
+        });
     };
 
     function getReports() {
-        reportService.searchLoc(self.targetLoc).then(function(response) {
+        return reportService.searchLoc(self.targetLoc).then(function(response) {
             return reportService.searchWeather(response.coords);
         }, function(err) {
-            return $q.reject(err)
+            return $q.reject(err);
         }).then(function(response) {
             cloneReports(response);
             self.targetLoc = response.formattedAddress;
+            self.resolvedLoc = response.formattedAddress;
             self.errMessage = '';
+            return response;
         }, function(err) {
             self.errMessage = err.error;
+            return $q.reject(err);
         });
     }
 
@@ -58,6 +64,7 @@ function homeController($http, $q, reportService, accountService, $window) {
             var data = reportService.getReports();
             cloneReports(data);
             self.targetLoc = data.formattedAddress;
+            self.resolvedLoc = data.formattedAddress;
         } else {
             getReports();
         }

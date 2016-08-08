@@ -1,15 +1,17 @@
 body {
-  padding-top: 6rem;
+    padding-top: 6rem;
 }
 
 td {
-  text-align: center;
+    text-align: center;
+}
+
+td.title {
+    font-weight: bold;
+    font-size: 125%;
 }
 
 .row {
-  margin: 2rem 0 2rem 0;
+    margin: 2rem 0 2rem 0;
 }
 
-canvas.chart {
-  margin-top: 3rem;
-}

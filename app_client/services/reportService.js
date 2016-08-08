@@ -64,15 +64,18 @@ function reportService($http, $q) {
     };
 
     function searchHistoricalData(coords, searchRange) {
-        var promises = null;
+        var results = null;
 
         if (coords) {
             var curDayInSec = Math.round(Date.now() / 1000);
             var i, minTemp, maxTemp;
-            promises = [];
+            results = {
+                location: reports.formattedAddress,
+                promises: []
+            };
 
             for (i = 1; i <= searchRange; i++) {
-                promises.push($http.get('/weather?lat=' + coords.lat + '&lng=' + coords.lng + '&time=' +
+                results.promises.push($http.get('/weather?lat=' + coords.lat + '&lng=' + coords.lng + '&time=' +
                     (curDayInSec - i * secInOneDay)).then(function (response) {
                     // this is success callback
                     var data = {};
@@ -86,7 +89,7 @@ function reportService($http, $q) {
             }
         }
 
-        return promises;
+        return results;
     };
 
     function containsData() {

@@ -1,9 +1,18 @@
 <div class="row">
-    <button class="btn btn-default col-xs-12 col-sm-4 col-sm-push-4 chart" ng-click="canCtrl.showHistoricalData()">
-        Show data for the last 2 weeks
-    </button>
-    <canvas id="line" class="chart chart-line" chart-data="data"
-            chart-labels="labels" chart-series="series" chart-options="options"
-            chart-dataset-override="datasetOverride" chart-click="onClick">
-    </canvas>
+    <div class="col-xs-12 col-sm-4 col-sm-push-4 text-center">
+        <button class="btn btn-default chart" ng-click="canCtrl.showHistoricalData()">
+            {{canCtrl.btnText}}
+        </button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12">
+        <figure ng-show="canCtrl.showCanvas">
+            <canvas id="line" class="chart chart-line" chart-data="data"
+                    chart-labels="labels" chart-series="series" chart-options="options"
+                    chart-dataset-override="datasetOverride" chart-click="onClick">
+            </canvas>
+            <figcaption class="text-center">{{canCtrl.figureCaption}}</figcaption>
+        </figure>
+    </div>
 </div>
