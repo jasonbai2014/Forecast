@@ -75,15 +75,16 @@ function reportService($http, $q) {
             };
 
             for (i = 1; i <= searchRange; i++) {
+                var a = curDayInSec - i * secInOneDay;
                 results.promises.push($http.get('/weather?lat=' + coords.lat + '&lng=' + coords.lng + '&time=' +
                     (curDayInSec - i * secInOneDay)).then(function (response) {
                     // this is success callback
                     var data = {};
-                    data.time = response.data.daily.data[0].time;
-                    minTemp = parseInt(response.data.daily.data[0].temperatureMin);
-                    maxTemp = parseInt(response.data.daily.data[0].temperatureMax);
-                    data.temp = Math.round((minTemp + maxTemp) / 2);
-
+                    data.time = response.data.currently.time;
+                    //minTemp = parseInt(response.data.daily.data[0].temperatureMin);
+                    //maxTemp = parseInt(response.data.daily.data[0].temperatureMax);
+                    //data.temp = Math.round((minTemp + maxTemp) / 2);
+                    data.temp = Math.round(response.data.currently.apparentTemperature);
                     return data;
                 }));
             }

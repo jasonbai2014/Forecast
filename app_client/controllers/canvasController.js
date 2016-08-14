@@ -3,7 +3,7 @@ angular.module('skyCastApp').controller('canvasController', ['$q', '$scope', 're
 
 function canvasController($q, $scope, reportService) {
     var self = this;
-    const searchRange = 14; // number of days for historical data search
+    const searchRange = 13; // number of days for historical data search
     self.btnText = 'Show data for the last 2 weeks';
     self.showCanvas = false;
 
